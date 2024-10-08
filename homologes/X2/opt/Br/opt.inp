@@ -1,0 +1,56 @@
+&GLOBAL
+RUN_TYPE GEO_OPT
+PROJECT_NAME Br2_opt 
+&END GLOBAL
+&FORCE_EVAL
+&DFT
+        BASIS_SET_FILE_NAME  ../../../basis_ae
+        POTENTIAL_FILE_NAME  POTENTIAL
+        &SCF
+                 EPS_SCF 1.0E-8
+                 MAX_SCF 20
+         &OUTER_SCF
+            MAX_SCF 50
+            EPS_SCF 1.0E-8
+         &END OUTER_SCF
+         &OT
+                  PRECONDITIONER FULL_ALL
+                  MINIMIZER DIIS
+         &END OT
+   &END SCF
+        &MGRID
+                CUTOFF 1200
+                REL_CUTOFF 80
+                NGRIDS 5
+        &END
+        &QS
+                EPS_PGF_ORB 1.0E-30
+                EPS_DEFAULT 1.0E-15
+                METHOD GAPW
+        &END QS
+
+        &POISSON
+                PERIODIC NONE
+                PSOLVER MT
+        &END POISSON
+
+        &XC
+                &XC_FUNCTIONAL PBE
+                &END XC_FUNCTIONAL
+        &END XC
+&END DFT
+&SUBSYS
+        &CELL
+                ABC 8.0 8.0 8.0
+                PERIODIC NONE
+        &END CELL
+        &TOPOLOGY
+                COORD_FILE_FORMAT XYZ
+                COORD_FILE_NAME start.xyz
+                &CENTER_COORDINATES
+                &END CENTER_COORDINATES
+        &END TOPOLOGY
+	@include ../../../kindef_ae
+&END SUBSYS
+&END FORCE_EVAL
+                 

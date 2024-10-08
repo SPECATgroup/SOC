@@ -1,0 +1,1791 @@
+ DBCSR| CPU Multiplication driver                                           XSMM (U)
+ DBCSR| Multrec recursion limit                                              512 (U)
+ DBCSR| Multiplication stack size                                           1000 (D)
+ DBCSR| Maximum elements for images                                    UNLIMITED (U)
+ DBCSR| Multiplicative factor virtual images                                   1 (U)
+ DBCSR| Use multiplication densification                                       T (D)
+ DBCSR| Multiplication size stacks                                             3 (U)
+ DBCSR| Use memory pool for CPU allocation                                     F (U)
+ DBCSR| Number of 3D layers                                               SINGLE (U)
+ DBCSR| Use MPI memory allocation                                              F (U)
+ DBCSR| Use RMA algorithm                                                      F (U)
+ DBCSR| Use Communication thread                                               T (U)
+ DBCSR| Communication thread load                                             83 (D)
+ DBCSR| MPI: My process id                                                     0
+ DBCSR| MPI: Number of processes                                             128
+ DBCSR| OMP: Current number of threads                                         2
+ DBCSR| OMP: Max number of threads                                             2
+ DBCSR| Split modifier for TAS multiplication algorithm                  1.0E+00 (U)
+
+
+  **** **** ******  **  PROGRAM STARTED AT               2024-01-12 14:51:18.668
+ ***** ** ***  *** **   PROGRAM STARTED ON                           nesh-srp244
+ **    ****   ******    PROGRAM STARTED BY                              suphc355
+ ***** **    ** ** **   PROGRAM PROCESS ID                               2667060
+  **** **  *******  **  PROGRAM STARTED IN /gxfs_work/cau/suphc355/homologes/X2/
+                                           PP/Cl
+
+ CP2K| version string:                 CP2K version 2024.1 (Development Version)
+ CP2K| source code revision number:                                  git:15182a3
+ CP2K| cp2kflags: omp libint fftw3 libxc libgrpp parallel mpi_f08 scalapack cosm
+ CP2K|            a xsmm spglib mkl
+ CP2K| is freely available from                            https://www.cp2k.org/
+ CP2K| Program compiled at                           Di 9. Jan 09:05:01 CET 2024
+ CP2K| Program compiled on                                           nesh-login2
+ CP2K| Program compiled for                                                local
+ CP2K| Data directory path            /gxfs_home/cau/suphc355/software/cp2k/data
+ CP2K| Input file name                                               PP_quad.inp
+ 
+ GLOBAL| Force Environment number                                              1
+ GLOBAL| Basis set file name                                 ../../../basis_quad
+ GLOBAL| Potential file name                                  GTH_SOC_POTENTIALS
+ GLOBAL| MM Potential file name                                     MM_POTENTIAL
+ GLOBAL| Coordinate file name                                            opt.xyz
+ GLOBAL| Method name                                                        CP2K
+ GLOBAL| Project name                                                Cl2_PP_quad
+ GLOBAL| Run type                                                         ENERGY
+ GLOBAL| FFT library                                                       FFTW3
+ GLOBAL| Diagonalization library                                       ScaLAPACK
+ GLOBAL| DGEMM library                                                      BLAS
+ GLOBAL| Orthonormality check for eigenvectors                          DISABLED
+ GLOBAL| Matrix multiplication library                                     COSMA
+ GLOBAL| All-to-all communication in single precision                          F
+ GLOBAL| FFTs using library dependent lengths                                  F
+ GLOBAL| Grid backend                                                       AUTO
+ GLOBAL| Global print level                                               MEDIUM
+ GLOBAL| MPI I/O enabled                                                       T
+ GLOBAL| Total number of message passing processes                           128
+ GLOBAL| Number of threads for this process                                    2
+ GLOBAL| This output is from process                                           0
+ GLOBAL| Stack size for threads created by OpenMP (OMP_STACKSIZE)        default
+ GLOBAL| CPU model name                              Intel(R) Xeon(R) Gold 6426Y
+ GLOBAL| CPUID                                                              1003
+
+ MEMORY| system memory details [Kb]
+ MEMORY|                        rank 0           min           max       average
+ MEMORY| MemTotal            263786136     263786136     263787636     263786511
+ MEMORY| MemFree             244390760     243921248     244484460     244268684
+ MEMORY| Buffers                556352        552364        953756        753902
+ MEMORY| Cached                 478820        460076        738808        596771
+ MEMORY| Slab                   468896        468772        523608        491089
+ MEMORY| SReclaimable            82704         80016        136380        108761
+ MEMORY| MemLikelyFree       245508636     245508636     246077672     245728119
+
+
+ *** Fundamental physical constants (SI units) ***
+
+ *** Literature: B. J. Mohr and B. N. Taylor,
+ ***             CODATA recommended values of the fundamental physical
+ ***             constants: 2006, Web Version 5.1
+ ***             http://physics.nist.gov/constants
+
+ Speed of light in vacuum [m/s]                             2.99792458000000E+08
+ Magnetic constant or permeability of vacuum [N/A**2]       1.25663706143592E-06
+ Electric constant or permittivity of vacuum [F/m]          8.85418781762039E-12
+ Planck constant (h) [J*s]                                  6.62606896000000E-34
+ Planck constant (h-bar) [J*s]                              1.05457162825177E-34
+ Elementary charge [C]                                      1.60217648700000E-19
+ Electron mass [kg]                                         9.10938215000000E-31
+ Electron g factor [ ]                                     -2.00231930436220E+00
+ Proton mass [kg]                                           1.67262163700000E-27
+ Fine-structure constant                                    7.29735253760000E-03
+ Rydberg constant [1/m]                                     1.09737315685270E+07
+ Avogadro constant [1/mol]                                  6.02214179000000E+23
+ Boltzmann constant [J/K]                                   1.38065040000000E-23
+ Atomic mass unit [kg]                                      1.66053878200000E-27
+ Bohr radius [m]                                            5.29177208590000E-11
+
+ *** Conversion factors ***
+
+ [u] -> [a.u.]                                              1.82288848426455E+03
+ [Angstrom] -> [Bohr] = [a.u.]                              1.88972613288564E+00
+ [a.u.] = [Bohr] -> [Angstrom]                              5.29177208590000E-01
+ [a.u.] -> [s]                                              2.41888432650478E-17
+ [a.u.] -> [fs]                                             2.41888432650478E-02
+ [a.u.] -> [J]                                              4.35974393937059E-18
+ [a.u.] -> [N]                                              8.23872205491840E-08
+ [a.u.] -> [K]                                              3.15774647902944E+05
+ [a.u.] -> [kJ/mol]                                         2.62549961709828E+03
+ [a.u.] -> [kcal/mol]                                       6.27509468713739E+02
+ [a.u.] -> [Pa]                                             2.94210107994716E+13
+ [a.u.] -> [bar]                                            2.94210107994716E+08
+ [a.u.] -> [atm]                                            2.90362800883016E+08
+ [a.u.] -> [eV]                                             2.72113838565563E+01
+ [a.u.] -> [Hz]                                             6.57968392072181E+15
+ [a.u.] -> [1/cm] (wave numbers)                            2.19474631370540E+05
+ [a.u./Bohr**2] -> [1/cm]                                   5.14048714338585E+03
+ 
+
+ CELL_TOP| Volume [angstrom^3]:                                       512.000000
+ CELL_TOP| Vector a [angstrom     8.000     0.000     0.000   |a| =     8.000000
+ CELL_TOP| Vector b [angstrom     0.000     8.000     0.000   |b| =     8.000000
+ CELL_TOP| Vector c [angstrom     0.000     0.000     8.000   |c| =     8.000000
+ CELL_TOP| Angle (b,c), alpha [degree]:                                90.000000
+ CELL_TOP| Angle (a,c), beta  [degree]:                                90.000000
+ CELL_TOP| Angle (a,b), gamma [degree]:                                90.000000
+ CELL_TOP| Numerically orthorhombic:                                         YES
+ CELL_TOP| Periodicity                                                      NONE
+ 
+ GENERATE|  Preliminary Number of Bonds generated:                             0
+ GENERATE|  Achieved consistency in connectivity generation.
+
+ CELL| Volume [angstrom^3]:                                           512.000000
+ CELL| Vector a [angstrom]:       8.000     0.000     0.000   |a| =     8.000000
+ CELL| Vector b [angstrom]:       0.000     8.000     0.000   |b| =     8.000000
+ CELL| Vector c [angstrom]:       0.000     0.000     8.000   |c| =     8.000000
+ CELL| Angle (b,c), alpha [degree]:                                    90.000000
+ CELL| Angle (a,c), beta  [degree]:                                    90.000000
+ CELL| Angle (a,b), gamma [degree]:                                    90.000000
+ CELL| Numerically orthorhombic:                                             YES
+ CELL| Periodicity                                                          NONE
+
+ CELL_REF| Volume [angstrom^3]:                                       512.000000
+ CELL_REF| Vector a [angstrom     8.000     0.000     0.000   |a| =     8.000000
+ CELL_REF| Vector b [angstrom     0.000     8.000     0.000   |b| =     8.000000
+ CELL_REF| Vector c [angstrom     0.000     0.000     8.000   |c| =     8.000000
+ CELL_REF| Angle (b,c), alpha [degree]:                                90.000000
+ CELL_REF| Angle (a,c), beta  [degree]:                                90.000000
+ CELL_REF| Angle (a,b), gamma [degree]:                                90.000000
+ CELL_REF| Numerically orthorhombic:                                         YES
+ CELL_REF| Periodicity                                                      NONE
+
+ *******************************************************************************
+ *   ___                                                                       *
+ *  /   \                                                                      *
+ * [ABORT]                                                                     *
+ *  \___/    The requested basis set <AUG-QZV2P-GTH> for element <CL> was not  *
+ *    |             found in the basis set files <../../../basis_quad>         *
+ *  O/|                                                                        *
+ * /| |                                                                        *
+ * / \                                          aobasis/basis_set_types.F:1438 *
+ *******************************************************************************
+
+
+ ===== Routine Calling Stack ===== 
+
+            3 read_qs_kind
+            2 create_qs_kind_set
+            1 CP2K
+ DBCSR| CPU Multiplication driver                                           XSMM (U)
+ DBCSR| Multrec recursion limit                                              512 (U)
+ DBCSR| Multiplication stack size                                           1000 (D)
+ DBCSR| Maximum elements for images                                    UNLIMITED (U)
+ DBCSR| Multiplicative factor virtual images                                   1 (U)
+ DBCSR| Use multiplication densification                                       T (D)
+ DBCSR| Multiplication size stacks                                             3 (U)
+ DBCSR| Use memory pool for CPU allocation                                     F (U)
+ DBCSR| Number of 3D layers                                               SINGLE (U)
+ DBCSR| Use MPI memory allocation                                              F (U)
+ DBCSR| Use RMA algorithm                                                      F (U)
+ DBCSR| Use Communication thread                                               T (U)
+ DBCSR| Communication thread load                                             83 (D)
+ DBCSR| MPI: My process id                                                     0
+ DBCSR| MPI: Number of processes                                             128
+ DBCSR| OMP: Current number of threads                                         2
+ DBCSR| OMP: Max number of threads                                             2
+ DBCSR| Split modifier for TAS multiplication algorithm                  1.0E+00 (U)
+
+
+  **** **** ******  **  PROGRAM STARTED AT               2024-01-15 14:29:00.085
+ ***** ** ***  *** **   PROGRAM STARTED ON                           nesh-clk555
+ **    ****   ******    PROGRAM STARTED BY                              suphc355
+ ***** **    ** ** **   PROGRAM PROCESS ID                                716727
+  **** **  *******  **  PROGRAM STARTED IN /gxfs_work/cau/suphc355/homologes/X2/
+                                           PP/Cl
+
+ CP2K| version string:                 CP2K version 2024.1 (Development Version)
+ CP2K| source code revision number:                                  git:15182a3
+ CP2K| cp2kflags: omp libint fftw3 libxc libgrpp parallel mpi_f08 scalapack cosm
+ CP2K|            a xsmm spglib mkl
+ CP2K| is freely available from                            https://www.cp2k.org/
+ CP2K| Program compiled at                           Di 9. Jan 09:05:01 CET 2024
+ CP2K| Program compiled on                                           nesh-login2
+ CP2K| Program compiled for                                                local
+ CP2K| Data directory path            /gxfs_home/cau/suphc355/software/cp2k/data
+ CP2K| Input file name                                               PP_quad.inp
+ 
+ GLOBAL| Force Environment number                                              1
+ GLOBAL| Basis set file name                                 ../../../basis_quad
+ GLOBAL| Potential file name                                  GTH_SOC_POTENTIALS
+ GLOBAL| MM Potential file name                                     MM_POTENTIAL
+ GLOBAL| Coordinate file name                                            opt.xyz
+ GLOBAL| Method name                                                        CP2K
+ GLOBAL| Project name                                                Cl2_PP_quad
+ GLOBAL| Run type                                                         ENERGY
+ GLOBAL| FFT library                                                       FFTW3
+ GLOBAL| Diagonalization library                                       ScaLAPACK
+ GLOBAL| DGEMM library                                                      BLAS
+ GLOBAL| Orthonormality check for eigenvectors                          DISABLED
+ GLOBAL| Matrix multiplication library                                     COSMA
+ GLOBAL| All-to-all communication in single precision                          F
+ GLOBAL| FFTs using library dependent lengths                                  F
+ GLOBAL| Grid backend                                                       AUTO
+ GLOBAL| Global print level                                               MEDIUM
+ GLOBAL| MPI I/O enabled                                                       T
+ GLOBAL| Total number of message passing processes                           128
+ GLOBAL| Number of threads for this process                                    2
+ GLOBAL| This output is from process                                           0
+ GLOBAL| Stack size for threads created by OpenMP (OMP_STACKSIZE)        default
+ GLOBAL| CPU model name                Intel(R) Xeon(R) Gold 6226R CPU @ 2.90GHz
+ GLOBAL| CPUID                                                              1003
+
+ MEMORY| system memory details [Kb]
+ MEMORY|                        rank 0           min           max       average
+ MEMORY| MemTotal            196683224     196683224     196683224     196683224
+ MEMORY| MemFree             175163396     175163396     175440192     175323728
+ MEMORY| Buffers                867688        623332        867688        728277
+ MEMORY| Cached                1502396       1502396       1724168       1593685
+ MEMORY| Slab                   800044        709300        800044        746970
+ MEMORY| SReclaimable           225040        208324        237960        226976
+ MEMORY| MemLikelyFree       177758520     177758520     177964768     177872666
+
+
+ *** Fundamental physical constants (SI units) ***
+
+ *** Literature: B. J. Mohr and B. N. Taylor,
+ ***             CODATA recommended values of the fundamental physical
+ ***             constants: 2006, Web Version 5.1
+ ***             http://physics.nist.gov/constants
+
+ Speed of light in vacuum [m/s]                             2.99792458000000E+08
+ Magnetic constant or permeability of vacuum [N/A**2]       1.25663706143592E-06
+ Electric constant or permittivity of vacuum [F/m]          8.85418781762039E-12
+ Planck constant (h) [J*s]                                  6.62606896000000E-34
+ Planck constant (h-bar) [J*s]                              1.05457162825177E-34
+ Elementary charge [C]                                      1.60217648700000E-19
+ Electron mass [kg]                                         9.10938215000000E-31
+ Electron g factor [ ]                                     -2.00231930436220E+00
+ Proton mass [kg]                                           1.67262163700000E-27
+ Fine-structure constant                                    7.29735253760000E-03
+ Rydberg constant [1/m]                                     1.09737315685270E+07
+ Avogadro constant [1/mol]                                  6.02214179000000E+23
+ Boltzmann constant [J/K]                                   1.38065040000000E-23
+ Atomic mass unit [kg]                                      1.66053878200000E-27
+ Bohr radius [m]                                            5.29177208590000E-11
+
+ *** Conversion factors ***
+
+ [u] -> [a.u.]                                              1.82288848426455E+03
+ [Angstrom] -> [Bohr] = [a.u.]                              1.88972613288564E+00
+ [a.u.] = [Bohr] -> [Angstrom]                              5.29177208590000E-01
+ [a.u.] -> [s]                                              2.41888432650478E-17
+ [a.u.] -> [fs]                                             2.41888432650478E-02
+ [a.u.] -> [J]                                              4.35974393937059E-18
+ [a.u.] -> [N]                                              8.23872205491840E-08
+ [a.u.] -> [K]                                              3.15774647902944E+05
+ [a.u.] -> [kJ/mol]                                         2.62549961709828E+03
+ [a.u.] -> [kcal/mol]                                       6.27509468713739E+02
+ [a.u.] -> [Pa]                                             2.94210107994716E+13
+ [a.u.] -> [bar]                                            2.94210107994716E+08
+ [a.u.] -> [atm]                                            2.90362800883016E+08
+ [a.u.] -> [eV]                                             2.72113838565563E+01
+ [a.u.] -> [Hz]                                             6.57968392072181E+15
+ [a.u.] -> [1/cm] (wave numbers)                            2.19474631370540E+05
+ [a.u./Bohr**2] -> [1/cm]                                   5.14048714338585E+03
+ 
+
+ CELL_TOP| Volume [angstrom^3]:                                       512.000000
+ CELL_TOP| Vector a [angstrom     8.000     0.000     0.000   |a| =     8.000000
+ CELL_TOP| Vector b [angstrom     0.000     8.000     0.000   |b| =     8.000000
+ CELL_TOP| Vector c [angstrom     0.000     0.000     8.000   |c| =     8.000000
+ CELL_TOP| Angle (b,c), alpha [degree]:                                90.000000
+ CELL_TOP| Angle (a,c), beta  [degree]:                                90.000000
+ CELL_TOP| Angle (a,b), gamma [degree]:                                90.000000
+ CELL_TOP| Numerically orthorhombic:                                         YES
+ CELL_TOP| Periodicity                                                      NONE
+ 
+ GENERATE|  Preliminary Number of Bonds generated:                             0
+ GENERATE|  Achieved consistency in connectivity generation.
+
+ CELL| Volume [angstrom^3]:                                           512.000000
+ CELL| Vector a [angstrom]:       8.000     0.000     0.000   |a| =     8.000000
+ CELL| Vector b [angstrom]:       0.000     8.000     0.000   |b| =     8.000000
+ CELL| Vector c [angstrom]:       0.000     0.000     8.000   |c| =     8.000000
+ CELL| Angle (b,c), alpha [degree]:                                    90.000000
+ CELL| Angle (a,c), beta  [degree]:                                    90.000000
+ CELL| Angle (a,b), gamma [degree]:                                    90.000000
+ CELL| Numerically orthorhombic:                                             YES
+ CELL| Periodicity                                                          NONE
+
+ CELL_REF| Volume [angstrom^3]:                                       512.000000
+ CELL_REF| Vector a [angstrom     8.000     0.000     0.000   |a| =     8.000000
+ CELL_REF| Vector b [angstrom     0.000     8.000     0.000   |b| =     8.000000
+ CELL_REF| Vector c [angstrom     0.000     0.000     8.000   |c| =     8.000000
+ CELL_REF| Angle (b,c), alpha [degree]:                                90.000000
+ CELL_REF| Angle (a,c), beta  [degree]:                                90.000000
+ CELL_REF| Angle (a,b), gamma [degree]:                                90.000000
+ CELL_REF| Numerically orthorhombic:                                         YES
+ CELL_REF| Periodicity                                                      NONE
+
+ *******************************************************************************
+ *******************************************************************************
+ **                                                                           **
+ **     #####                         ##              ##                      **
+ **    ##   ##            ##          ##              ##                      **
+ **   ##     ##                       ##            ######                    **
+ **   ##     ##  ##   ##  ##   #####  ##  ##   ####   ##    #####    #####    **
+ **   ##     ##  ##   ##  ##  ##      ## ##   ##      ##   ##   ##  ##   ##   **
+ **   ##  ## ##  ##   ##  ##  ##      ####     ###    ##   ######   ######    **
+ **    ##  ###   ##   ##  ##  ##      ## ##      ##   ##   ##       ##        **
+ **     #######   #####   ##   #####  ##  ##  ####    ##    #####   ##        **
+ **           ##                                                    ##        **
+ **                                                                           **
+ **                                                ... make the atoms dance   **
+ **                                                                           **
+ **            Copyright (C) by CP2K developers group (2000-2024)             **
+ **                      J. Chem. Phys. 152, 194103 (2020)                    **
+ **                                                                           **
+ *******************************************************************************
+
+ DFT| Spin restricted Kohn-Sham (RKS) calculation                            RKS
+ DFT| Multiplicity                                                             1
+ DFT| Number of spin states                                                    1
+ DFT| Charge                                                                   0
+ DFT| Self-interaction correction (SIC)                                       NO
+ DFT| Cutoffs: density                                              1.000000E-10
+ DFT|          gradient                                             1.000000E-10
+ DFT|          tau                                                  1.000000E-10
+ DFT|          cutoff_smoothing_range                               0.000000E+00
+ DFT| XC density smoothing                                                  NONE
+ DFT| XC derivatives                                                          PW
+
+ FUNCTIONAL| PBE:
+ FUNCTIONAL| J.P.Perdew, K.Burke, M.Ernzerhof, Phys. Rev. Letter, vol. 77, n 18,
+ FUNCTIONAL|  pp. 3865-3868, (1996) {spin unpolarized}                          
+
+
+ QS| Method:                                                                 GPW
+ QS| Density plane wave grid type                        NON-SPHERICAL FULLSPACE
+ QS| Number of grid levels:                                                    5
+ QS| Density cutoff [a.u.]:                                                600.0
+ QS| Multi grid cutoff [a.u.]: 1) grid level                               600.0
+ QS|                           2) grid level                               200.0
+ QS|                           3) grid level                                66.7
+ QS|                           4) grid level                                22.2
+ QS|                           5) grid level                                 7.4
+ QS| Grid level progression factor:                                          3.0
+ QS| Relative density cutoff [a.u.]:                                        40.0
+ QS| Interaction thresholds: eps_pgf_orb:                                1.0E-30
+ QS|                         eps_filter_matrix:                          0.0E+00
+ QS|                         eps_core_charge:                            1.0E-17
+ QS|                         eps_rho_gspace:                             1.0E-15
+ QS|                         eps_rho_rspace:                             1.0E-15
+ QS|                         eps_gvg_rspace:                             3.2E-08
+ QS|                         eps_ppl:                                    1.0E-02
+ QS|                         eps_ppnl:                                   3.2E-10
+
+
+ ATOMIC KIND INFORMATION
+
+  1. Atomic kind: Cl                                    Number of atoms:       2
+
+     Orbital Basis Set                                             aug-QZV2P-GTH
+
+       Number of orbital shell sets:                                           4
+       Number of orbital shells:                                              12
+       Number of primitive Cartesian functions:                               10
+       Number of Cartesian basis functions:                                   32
+       Number of spherical basis functions:                                   30
+       Norm type:                                                              2
+
+       Normalised Cartesian orbitals:
+
+                        Set   Shell   Orbital            Exponent    Coefficient
+
+                          1       1    3s                4.739069       0.105336
+                                                         2.566451      -0.516383
+                                                         1.116824       0.031344
+                                                         0.500732       0.266884
+                                                         0.209222       0.105940
+                                                         0.081808       0.005806
+
+                          1       2    4s                4.739069       0.000000
+                                                         2.566451       0.000000
+                                                         1.116824       0.000000
+                                                         0.500732       0.424242
+                                                         0.209222       0.000000
+                                                         0.081808       0.000000
+
+                          1       3    5s                4.739069       0.000000
+                                                         2.566451       0.000000
+                                                         1.116824       0.000000
+                                                         0.500732       0.000000
+                                                         0.209222       0.220478
+                                                         0.081808       0.000000
+
+                          1       4    6s                4.739069       0.000000
+                                                         2.566451       0.000000
+                                                         1.116824       0.000000
+                                                         0.500732       0.000000
+                                                         0.209222       0.000000
+                                                         0.081808       0.109020
+
+                          1       5    4px               4.739069      -0.183676
+                                                         2.566451      -0.198587
+                                                         1.116824       0.316403
+                                                         0.500732       0.255952
+                                                         0.209222       0.082845
+                                                         0.081808       0.009005
+                          1       5    4py               4.739069      -0.183676
+                                                         2.566451      -0.198587
+                                                         1.116824       0.316403
+                                                         0.500732       0.255952
+                                                         0.209222       0.082845
+                                                         0.081808       0.009005
+                          1       5    4pz               4.739069      -0.183676
+                                                         2.566451      -0.198587
+                                                         1.116824       0.316403
+                                                         0.500732       0.255952
+                                                         0.209222       0.082845
+                                                         0.081808       0.009005
+
+                          1       6    5px               4.739069       0.000000
+                                                         2.566451       0.000000
+                                                         1.116824       0.000000
+                                                         0.500732       0.600408
+                                                         0.209222       0.000000
+                                                         0.081808       0.000000
+                          1       6    5py               4.739069       0.000000
+                                                         2.566451       0.000000
+                                                         1.116824       0.000000
+                                                         0.500732       0.600408
+                                                         0.209222       0.000000
+                                                         0.081808       0.000000
+                          1       6    5pz               4.739069       0.000000
+                                                         2.566451       0.000000
+                                                         1.116824       0.000000
+                                                         0.500732       0.600408
+                                                         0.209222       0.000000
+                                                         0.081808       0.000000
+
+                          1       7    6px               4.739069       0.000000
+                                                         2.566451       0.000000
+                                                         1.116824       0.000000
+                                                         0.500732       0.000000
+                                                         0.209222       0.201697
+                                                         0.081808       0.000000
+                          1       7    6py               4.739069       0.000000
+                                                         2.566451       0.000000
+                                                         1.116824       0.000000
+                                                         0.500732       0.000000
+                                                         0.209222       0.201697
+                                                         0.081808       0.000000
+                          1       7    6pz               4.739069       0.000000
+                                                         2.566451       0.000000
+                                                         1.116824       0.000000
+                                                         0.500732       0.000000
+                                                         0.209222       0.201697
+                                                         0.081808       0.000000
+
+                          1       8    7px               4.739069       0.000000
+                                                         2.566451       0.000000
+                                                         1.116824       0.000000
+                                                         0.500732       0.000000
+                                                         0.209222       0.000000
+                                                         0.081808       0.062364
+                          1       8    7py               4.739069       0.000000
+                                                         2.566451       0.000000
+                                                         1.116824       0.000000
+                                                         0.500732       0.000000
+                                                         0.209222       0.000000
+                                                         0.081808       0.062364
+                          1       8    7pz               4.739069       0.000000
+                                                         2.566451       0.000000
+                                                         1.116824       0.000000
+                                                         0.500732       0.000000
+                                                         0.209222       0.000000
+                                                         0.081808       0.062364
+
+                          2       1    3dx2              1.046000       1.780696
+                                                         0.344000       0.000000
+                          2       1    3dxy              1.046000       3.084257
+                                                         0.344000       0.000000
+                          2       1    3dxz              1.046000       3.084257
+                                                         0.344000       0.000000
+                          2       1    3dy2              1.046000       1.780696
+                                                         0.344000       0.000000
+                          2       1    3dyz              1.046000       3.084257
+                                                         0.344000       0.000000
+                          2       1    3dz2              1.046000       1.780696
+                                                         0.344000       0.000000
+
+                          2       2    4dx2              1.046000       0.000000
+                                                         0.344000       0.254324
+                          2       2    4dxy              1.046000       0.000000
+                                                         0.344000       0.440501
+                          2       2    4dxz              1.046000       0.000000
+                                                         0.344000       0.440501
+                          2       2    4dy2              1.046000       0.000000
+                                                         0.344000       0.254324
+                          2       2    4dyz              1.046000       0.000000
+                                                         0.344000       0.440501
+                          2       2    4dz2              1.046000       0.000000
+                                                         0.344000       0.254324
+
+                          3       1    3s                0.051900       0.077497
+
+                          4       1    3px               0.037600       0.023601
+                          4       1    3py               0.037600       0.023601
+                          4       1    3pz               0.037600       0.023601
+
+       Atomic covalent radius [Angstrom]:                                  0.990
+
+       Atomic van der Waals radius [Angstrom]:                             1.750
+
+     GTH Potential information for                                       GTH-PBE
+
+       Description:                       Goedecker-Teter-Hutter pseudopotential
+                                           Goedecker et al., PRB 54, 1703 (1996)
+                                          Hartwigsen et al., PRB 58, 3641 (1998)
+                                                      Krack, TCA 114, 145 (2005)
+
+       Gaussian exponent of the core charge distribution:               2.974420
+       Electronic configuration (s p d ...):                               2   5
+
+       Parameters of the local part of the GTH pseudopotential:
+
+                          rloc        C1          C2          C3          C4
+                        0.410000   -6.392082
+
+       Parameters of the non-local part of the GTH (SOC) pseudopotential:
+
+                   l      r(l)      h(i,j,l)
+                                    k(i,j,l)
+                   0    0.339539   15.218990   -4.934523
+                                   -4.934523    6.370442
+                   1    0.378474    4.338775    0.000000
+                                    0.000000    0.000000
+                                    0.045289   -0.032578
+                                   -0.032578    0.038547
+
+
+ MOLECULE KIND INFORMATION
+
+
+ All atoms are their own molecule, skipping detailed information
+
+
+ TOTAL NUMBERS AND MAXIMUM NUMBERS
+
+  Total number of            - Atomic kinds:                                   1
+                             - Atoms:                                          2
+                             - Shell sets:                                     8
+                             - Shells:                                        24
+                             - Primitive Cartesian functions:                 20
+                             - Cartesian basis functions:                     64
+                             - Spherical basis functions:                     60
+
+  Maximum angular momentum of- Orbital basis functions:                        2
+                             - Local part of the GTH pseudopotential:          0
+                             - Non-local part of the GTH pseudopotential:      3
+
+
+ MODULE QUICKSTEP: ATOMIC COORDINATES IN ANGSTROM
+
+   Atom Kind Element         X             Y             Z       Z(eff)     Mass
+      1    1 Cl   17      3.003497      4.000002      4.000004   7.0000  35.4530
+      2    1 Cl   17      4.996503      3.999998      3.999996   7.0000  35.4530
+
+
+
+ SCF PARAMETERS         Density guess:                                    ATOMIC
+                        --------------------------------------------------------
+                        max_scf:                                              20
+                        max_scf_history:                                       0
+                        max_diis:                                              4
+                        --------------------------------------------------------
+                        eps_scf:                                        1.00E-07
+                        eps_scf_history:                                0.00E+00
+                        eps_diis:                                       1.00E-01
+                        eps_eigval:                                     1.00E-05
+                        --------------------------------------------------------
+                        level_shift [a.u.]:                             0.000000
+                        --------------------------------------------------------
+                        Outer loop SCF in use 
+                        No variables optimised in outer loop
+                        eps_scf                                         1.00E-07
+                        max_scf                                               50
+                        No outer loop optimization
+                        step_size                                       5.00E-01
+
+ PW_GRID| Information for grid number                                          1
+ PW_GRID| Grid distributed over                                   128 processors
+ PW_GRID| Real space group dimensions                                   128    1
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                   1200.0
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1           -120     119                Points:         240
+ PW_GRID|   Bounds   2           -120     119                Points:         240
+ PW_GRID|   Bounds   3           -120     119                Points:         240
+ PW_GRID| Volume element (a.u.^3)  0.2499E-03     Volume (a.u.^3)      3455.1473
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                           108000.0      108000      108000
+ PW_GRID|   G-Rays                                 450.0         450         450
+ PW_GRID|   Real Space Points                   108000.0      115200       57600
+
+ PW_GRID| Information for grid number                                          2
+ PW_GRID| Number of the reference grid                                         1
+ PW_GRID| Grid distributed over                                   128 processors
+ PW_GRID| Real space group dimensions                                   128    1
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                    600.0
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1            -90      89                Points:         180
+ PW_GRID|   Bounds   2            -90      89                Points:         180
+ PW_GRID|   Bounds   3            -90      89                Points:         180
+ PW_GRID| Volume element (a.u.^3)  0.5924E-03     Volume (a.u.^3)      3455.1473
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                            45562.5       45720       45360
+ PW_GRID|   G-Rays                                 253.1         254         252
+ PW_GRID|   Real Space Points                    45562.5       64800       32400
+
+ PW_GRID| Information for grid number                                          3
+ PW_GRID| Number of the reference grid                                         2
+ PW_GRID| Grid distributed over                                   128 processors
+ PW_GRID| Real space group dimensions                                     8   16
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                    200.0
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1            -50      49                Points:         100
+ PW_GRID|   Bounds   2            -50      49                Points:         100
+ PW_GRID|   Bounds   3            -50      49                Points:         100
+ PW_GRID| Volume element (a.u.^3)  0.3455E-02     Volume (a.u.^3)      3455.1473
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                             7812.5        7900        7700
+ PW_GRID|   G-Rays                                  78.1          79          77
+ PW_GRID|   Real Space Points                     7812.5        9100        7200
+
+ PW_GRID| Information for grid number                                          4
+ PW_GRID| Number of the reference grid                                         2
+ PW_GRID| Grid distributed over                                   128 processors
+ PW_GRID| Real space group dimensions                                     8   16
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                     66.7
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1            -30      29                Points:          60
+ PW_GRID|   Bounds   2            -30      29                Points:          60
+ PW_GRID|   Bounds   3            -30      29                Points:          60
+ PW_GRID| Volume element (a.u.^3)  0.1600E-01     Volume (a.u.^3)      3455.1473
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                             1687.5        1800        1620
+ PW_GRID|   G-Rays                                  28.1          30          27
+ PW_GRID|   Real Space Points                     1687.5        1920        1260
+
+ PW_GRID| Information for grid number                                          5
+ PW_GRID| Number of the reference grid                                         2
+ PW_GRID| Grid distributed over                                   128 processors
+ PW_GRID| Real space group dimensions                                     8   16
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                     22.2
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1            -18      17                Points:          36
+ PW_GRID|   Bounds   2            -18      17                Points:          36
+ PW_GRID|   Bounds   3            -18      17                Points:          36
+ PW_GRID| Volume element (a.u.^3)  0.7406E-01     Volume (a.u.^3)      3455.1473
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                              364.5         396         324
+ PW_GRID|   G-Rays                                  10.1          11           9
+ PW_GRID|   Real Space Points                      364.5         540         288
+
+ PW_GRID| Information for grid number                                          6
+ PW_GRID| Number of the reference grid                                         2
+ PW_GRID| Grid distributed over                                   128 processors
+ PW_GRID| Real space group dimensions                                     8   16
+ PW_GRID| the grid is blocked:                                                NO
+ PW_GRID| Cutoff [a.u.]                                                      7.4
+ PW_GRID| spherical cutoff:                                                   NO
+ PW_GRID|   Bounds   1            -10       9                Points:          20
+ PW_GRID|   Bounds   2            -10       9                Points:          20
+ PW_GRID|   Bounds   3            -10       9                Points:          20
+ PW_GRID| Volume element (a.u.^3)  0.4319         Volume (a.u.^3)      3455.1473
+ PW_GRID| Grid span                                                    FULLSPACE
+ PW_GRID|   Distribution                         Average         Max         Min
+ PW_GRID|   G-Vectors                               62.5          80          40
+ PW_GRID|   G-Rays                                   3.1           4           2
+ PW_GRID|   Real Space Points                       62.5         120          40
+
+ POISSON| Solver                                          Martyna-Tuckerman (MT)
+ POISSON| MT| Alpha                                                        7.000
+ POISSON| MT| Relative cutoff                                                2.0
+ POISSON| Periodicity                                                       NONE
+
+ RS_GRID| Information for grid number                                          2
+ RS_GRID|   Bounds   1            -90      89                Points:         180
+ RS_GRID|   Bounds   2            -90      89                Points:         180
+ RS_GRID|   Bounds   3            -90      89                Points:         180
+ RS_GRID| Real space distribution over                                  8 groups
+ RS_GRID| Real space distribution along direction                              2
+ RS_GRID| Border size                                                         45
+ RS_GRID| Real space distribution over                                 16 groups
+ RS_GRID| Real space distribution along direction                              3
+ RS_GRID| Border size                                                         45
+ RS_GRID|   Distribution                         Average         Max         Min
+ RS_GRID|   Planes                                 112.5         113         112
+ RS_GRID|   Distribution                         Average         Max         Min
+ RS_GRID|   Planes                                 101.2         102         101
+
+ RS_GRID| Information for grid number                                          3
+ RS_GRID|   Bounds   1            -50      49                Points:         100
+ RS_GRID|   Bounds   2            -50      49                Points:         100
+ RS_GRID|   Bounds   3            -50      49                Points:         100
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                          4
+ RS_GRID|   Bounds   1            -30      29                Points:          60
+ RS_GRID|   Bounds   2            -30      29                Points:          60
+ RS_GRID|   Bounds   3            -30      29                Points:          60
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                          5
+ RS_GRID|   Bounds   1            -18      17                Points:          36
+ RS_GRID|   Bounds   2            -18      17                Points:          36
+ RS_GRID|   Bounds   3            -18      17                Points:          36
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ RS_GRID| Information for grid number                                          6
+ RS_GRID|   Bounds   1            -10       9                Points:          20
+ RS_GRID|   Bounds   2            -10       9                Points:          20
+ RS_GRID|   Bounds   3            -10       9                Points:          20
+ RS_GRID| Real space fully replicated
+ RS_GRID| Group size                                                           1
+
+ Number of electrons:                                                         14
+ Number of occupied orbitals:                                                  7
+ Number of molecular orbitals:                                                 7
+
+ Number of orbital functions:                                                 60
+ Number of independent orbital functions:                                     60
+
+ Extrapolation method: initial_guess
+
+ Atomic guess: The first density matrix is obtained in terms of atomic orbitals
+               and electronic configurations assigned to each atomic kind
+
+ Guess for atomic kind: Cl
+
+ Electronic structure
+    Total number of core electrons                                         10.00
+    Total number of valence electrons                                       7.00
+    Total number of electrons                                              17.00
+    Multiplicity                                                   not specified
+    S   [  2.00  2.00] 2.00
+    P   [  6.00] 5.00
+ 
+
+ *******************************************************************************
+                  Iteration          Convergence                     Energy [au]
+ *******************************************************************************
+                          1        0.294261E-01                 -14.777738293512
+                          2        0.157700E-01                 -14.777884545854
+                          3        0.226056E-02                 -14.777984077567
+                          4        0.424851E-04                 -14.777985945157
+                          5        0.521191E-06                 -14.777985945914
+
+ Energy components [Hartree]           Total Energy ::          -14.777985945914
+                                        Band Energy ::           -2.974917954657
+                                     Kinetic Energy ::            5.567062954840
+                                   Potential Energy ::          -20.345048900754
+                                      Virial (-V/T) ::            3.654539038950
+                                        Core Energy ::          -24.682191373889
+                                          XC Energy ::           -2.742815510629
+                                     Coulomb Energy ::           12.647020938603
+                       Total Pseudopotential Energy ::          -30.308419329287
+                       Local Pseudopotential Energy ::          -33.453843488998
+                    Nonlocal Pseudopotential Energy ::            3.145424159710
+                                        Confinement ::            0.591650005585
+
+ Orbital energies  State     L     Occupation   Energy[a.u.]          Energy[eV]
+
+                       1     0          2.000      -0.741540          -20.178326
+ 
+                       1     1          5.000      -0.298368           -8.118996
+ 
+
+ Total Electron Density at R=0:                                         0.000004
+ Re-scaling the density matrix to get the right number of electrons
+                  # Electrons              Trace(P)               Scaling factor
+                           14                14.000                        1.000
+
+
+ SCF WAVEFUNCTION OPTIMIZATION
+
+  ----------------------------------- OT ---------------------------------------
+  Minimizer      : DIIS                : direct inversion
+                                         in the iterative subspace
+                                         using   7 DIIS vectors
+                                         safer DIIS on
+  Preconditioner : FULL_ALL            : diagonalization, state selective
+  Precond_solver : DEFAULT
+  stepsize       :    0.15000000                  energy_gap     :    0.08000000
+  eps_taylor     :   0.10000E-15                  max_taylor     :             4
+  ----------------------------------- OT ---------------------------------------
+
+  Step     Update method      Time    Convergence         Total energy    Change
+  ------------------------------------------------------------------------------
+     1 OT DIIS     0.15E+00   34.6     0.17096569       -29.2940337673 -2.93E+01
+     2 OT DIIS     0.15E+00   25.1     0.15589754       -28.7568703802  5.37E-01
+     3 OT DIIS     0.15E+00   25.2     0.17211611       -29.6389581968 -8.82E-01
+     4 OT DIIS     0.15E+00   24.8     0.07859760       -29.8654500913 -2.26E-01
+     5 OT DIIS     0.15E+00   25.6     0.06491019       -29.8899387778 -2.45E-02
+     6 OT DIIS     0.15E+00   26.4     0.01627672       -29.9272097004 -3.73E-02
+     7 OT DIIS     0.15E+00   25.3     0.00587685       -29.9306215028 -3.41E-03
+     8 OT DIIS     0.15E+00   23.9     0.00541485       -29.9310504991 -4.29E-04
+     9 OT DIIS     0.15E+00   23.7     0.00070873       -29.9313729962 -3.22E-04
+    10 OT DIIS     0.15E+00   23.8     0.00039821       -29.9313909012 -1.79E-05
+    11 OT DIIS     0.15E+00   24.1     0.00012334       -29.9313946396 -3.74E-06
+    12 OT DIIS     0.15E+00   24.8     0.00005538       -29.9313952347 -5.95E-07
+    13 OT DIIS     0.15E+00   24.9     0.00005027       -29.9313952915 -5.68E-08
+    14 OT DIIS     0.15E+00   24.7     0.00002028       -29.9313953110 -1.96E-08
+    15 OT DIIS     0.15E+00   25.0     0.00000770       -29.9313953166 -5.58E-09
+    16 OT DIIS     0.15E+00   24.6     0.00000338       -29.9313953174 -7.96E-10
+    17 OT DIIS     0.15E+00   24.9     0.00000061       -29.9313953176 -1.64E-10
+    18 OT DIIS     0.15E+00   24.4     0.00000028       -29.9313953176 -9.63E-12
+    19 OT DIIS     0.15E+00   23.9     0.00000012       -29.9313953176 -2.26E-12
+    20 OT DIIS     0.15E+00   24.3     0.00000004       -29.9313953176 -4.37E-13
+
+  *** SCF run converged in    20 steps ***
+
+
+  Electronic density on regular grids:        -14.0000000000       -0.0000000000
+  Core density on regular grids:               14.0000000000       -0.0000000000
+  Total charge density on r-space grids:       -0.0000000000
+  Total charge density g-space grids:          -0.0000000000
+
+  Overlap energy of the core charge distribution:               0.00000000107716
+  Self energy of the core charge distribution:                -67.42753559473186
+  Core Hamiltonian energy:                                     15.48741288032820
+  Hartree energy:                                              27.78448488222579
+  Exchange-correlation energy:                                 -5.77575748649833
+
+  Total energy:                                               -29.93139531759905
+
+  outer SCF iter =    1 RMS gradient =   0.35E-07 energy =        -29.9313953176
+  outer SCF loop converged in   1 iterations or   20 steps
+
+
+ !-----------------------------------------------------------------------------!
+                     Mulliken Population Analysis
+
+ #  Atom  Element  Kind  Atomic population                           Net charge
+       1     Cl       1          7.000000                              0.000000
+       2     Cl       1          7.000000                             -0.000000
+ # Total charge                             14.000000                 -0.000000
+
+ !-----------------------------------------------------------------------------!
+
+ !-----------------------------------------------------------------------------!
+                           Hirshfeld Charges
+
+  #Atom  Element  Kind  Ref Charge     Population                    Net charge
+      1       Cl     1       7.000          7.000                         0.000
+      2       Cl     1       7.000          7.000                         0.000
+
+  Total Charge                                                            0.001
+ !-----------------------------------------------------------------------------!
+
+ *******************************************************************************
+ **                                                                           **
+ **         ######## #######   #######   ######## #######  ########           **
+ **            ##    ##     ## ##     ## ##       ##   ##     ##              **
+ **            ##    ##     ## ##     ## ######   #######     ##              **
+ **            ##    ##     ## ##     ## ##       ##          ##              **
+ **            ##    #######   #######   ##       ##          ##              **
+ **                                                                           **
+ *******************************************************************************
+ KERNEL|                                                                    FULL
+ FUNCTIONAL| PBE:
+ FUNCTIONAL| J.P.Perdew, K.Burke, M.Ernzerhof, Phys. Rev. Letter, vol. 77, n 18,
+ FUNCTIONAL|  pp. 3865-3868, (1996) {spin unpolarized}                          
+ KERNEL| Spin symmetry of excitations                                    Triplet
+ TDDFPT| Number of states calculated                                          10
+ TDDFPT| Number of Davidson iterations                                        20
+ TDDFPT| Davidson iteration convergence                                0.100E-07
+ TDDFPT| Max. number of Krylov space vectors                                  60
+ TDDFPT| Molecular Orbitals:        Spin       AOs       Occ      Virt     Total
+ TDDFPT|                               1        60         7        53        60
+
+ *******************************************************************************
+ **                                                                           **
+ **                            ####### ####### #######                        **
+ **                        #   ##      ##   ## ##                             **
+ **                       ###  ######  ##   ## ##                             **
+ **                        #       ##  ##   ## ##                             **
+ **                            ######  ####### #######                        **
+ **                 Based on the xas module from Augustin Bussy               **
+ *******************************************************************************
+ 
+ -------------------------------------------------------------------------------
+ -                      TDDFPT TRIPLET ENERGIES                                 -
+ -------------------------------------------------------------------------------
+ 
+ -------------------------------------------------------------------------------
+ -                            TDDFPT Initial Guess                             -
+ -------------------------------------------------------------------------------
+          State         Occupied      ->      Virtual          Excitation
+          number         orbital              orbital          energy (eV)
+ -------------------------------------------------------------------------------
+             1                7                    8              2.97608
+             2                6                    8              2.97608
+             3                5                    8              5.64687
+             4                4                    8              5.64687
+             5                7                    9              7.43146
+             6                6                    9              7.43146
+             7                3                    8              7.74845
+             8                7                   10              8.07881
+             9                6                   10              8.07881
+            10                7                   11              8.75760
+
+      Number of active states:                                        371
+ -------------------------------------------------------------------------------
+ 
+ -------------------------------------------------------------------------------
+ -                      TDDFPT WAVEFUNCTION OPTIMIZATION                       -
+ -------------------------------------------------------------------------------
+
+          Step            Time         Convergence           Conv. states
+ -------------------------------------------------------------------------------
+
+    State    Exc. energy (eV)      Convergence (eV)
+        1       2.5434400            -4.3264E-01
+        2       2.5434401            -4.3264E-01
+        3       5.2135955            -4.3327E-01
+        4       5.2135955            -4.3327E-01
+        5       6.7936775            -6.3778E-01
+        6       7.3170977            -1.1436E-01
+        7       7.3170977            -4.3135E-01
+        8       8.0062231            -7.2589E-02
+        9       8.0062231            -7.2589E-02
+       10       8.7098977            -4.7704E-02
+ 
+             1           119.5          2.3438E-02                      0
+
+    State    Exc. energy (eV)      Convergence (eV)
+        1       2.5121812            -3.1259E-02
+        2       2.5121813            -3.1259E-02
+        3       5.1769217            -3.6674E-02
+        4       5.1769217            -3.6674E-02
+        5       6.7294590            -6.4219E-02
+        6       7.3071752            -9.9225E-03
+        7       7.3071752            -9.9225E-03
+        8       8.0006764            -5.5468E-03
+        9       8.0006764            -5.5468E-03
+       10       8.6560362            -5.3862E-02
+ 
+             2           122.7          2.3600E-03                      0
+
+    State    Exc. energy (eV)      Convergence (eV)
+        1       2.5121694            -1.1802E-05
+        2       2.5121695            -1.1802E-05
+        3       5.1768891            -3.2650E-05
+        4       5.1768891            -3.2650E-05
+        5       6.7294014            -5.7565E-05
+        6       7.3071613            -1.3936E-05
+        7       7.3071613            -1.3936E-05
+        8       8.0006598            -1.6546E-05
+        9       8.0006598            -1.6546E-05
+       10       8.6058810            -5.0155E-02
+ 
+             3           124.0          1.8432E-03                      0
+
+    State    Exc. energy (eV)      Convergence (eV)
+        1       2.5121694            -8.3466E-09
+        2       2.5121694            -8.3466E-09
+        3       5.1768890            -5.3511E-08
+        4       5.1768890            -5.3511E-08
+        5       6.7294012            -1.8488E-07
+        6       7.3071612            -4.3252E-08
+        7       7.3071613            -4.3252E-08
+        8       8.0006598            -4.9630E-08
+        9       8.0006598            -4.9630E-08
+       10       8.5817371            -2.4144E-02
+ 
+             4           129.7          8.8727E-04                      9
+
+    State    Exc. energy (eV)      Convergence (eV)
+        1       2.5121694            -4.6392E-12
+        2       2.5121694            -4.6426E-12
+        3       5.1768890            -9.7407E-12
+        4       5.1768890            -9.7414E-12
+        5       6.7294012            -8.1362E-10
+        6       7.3071612            -1.1521E-11
+        7       7.3071613            -1.1521E-11
+        8       8.0006598            -3.5724E-11
+        9       8.0006598            -3.5726E-11
+       10       8.5815370            -2.0009E-04
+ 
+             5           138.3          7.3531E-06                      9
+
+    State    Exc. energy (eV)      Convergence (eV)
+        1       2.5121694             7.5527E-16
+        2       2.5121694            -5.2869E-15
+        3       5.1768890            -3.7763E-15
+        4       5.1768890            -4.5316E-15
+        5       6.7294012            -2.5113E-12
+        6       7.3071612            -6.0421E-15
+        7       7.3071613            -7.5527E-15
+        8       8.0006598            -2.8700E-14
+        9       8.0006598            -2.1147E-14
+       10       8.5815317            -5.3120E-06
+ 
+             6            89.2          1.9521E-07                      9
+ ------------------------- Restart Davidson iterations -------------------------
+
+    State    Exc. energy (eV)      Convergence (eV)
+        1       2.5121694            -3.7763E-15
+        2       2.5121694             9.0632E-15
+        3       5.1768890             3.0211E-15
+        4       5.1768890             6.7974E-15
+        5       6.7294012             4.5316E-15
+        6       7.3071612            -1.9637E-14
+        7       7.3071613            -3.3232E-14
+        8       8.0006598            -9.9695E-14
+        9       8.0006598             1.6918E-13
+       10       8.5815317            -9.0632E-15
+ 
+             7            89.0          6.2172E-15                     10
+ 
+ -------------------------------------------------------------------------------
+ -  TDDFPT run converged in 7 iteration(s) 
+ -------------------------------------------------------------------------------
+
+ R-TDDFPT states of multiplicity 3
+ Transition dipoles calculated using length formulation
+
+         State    Excitation        Transition dipole (a.u.)        Oscillator
+         number   energy (eV)       x           y           z     strength (a.u.)
+         ------------------------------------------------------------------------
+ TDDFPT|      1       2.51217   0.0000E+00  0.0000E+00  0.0000E+00   0.00000E+00
+ TDDFPT|      2       2.51217   0.0000E+00  0.0000E+00  0.0000E+00   0.00000E+00
+ TDDFPT|      3       5.17689   0.0000E+00  0.0000E+00  0.0000E+00   0.00000E+00
+ TDDFPT|      4       5.17689   0.0000E+00  0.0000E+00  0.0000E+00   0.00000E+00
+ TDDFPT|      5       6.72940   0.0000E+00  0.0000E+00  0.0000E+00   0.00000E+00
+ TDDFPT|      6       7.30716   0.0000E+00  0.0000E+00  0.0000E+00   0.00000E+00
+ TDDFPT|      7       7.30716   0.0000E+00  0.0000E+00  0.0000E+00   0.00000E+00
+ TDDFPT|      8       8.00066   0.0000E+00  0.0000E+00  0.0000E+00   0.00000E+00
+ TDDFPT|      9       8.00066   0.0000E+00  0.0000E+00  0.0000E+00   0.00000E+00
+ TDDFPT|     10       8.58153   0.0000E+00  0.0000E+00  0.0000E+00   0.00000E+00
+
+ TDDFPT : CheckSum  =  0.753101E+00
+ 
+ -------------------------------------------------------------------------------
+ -                            Excitation analysis                              -
+ -------------------------------------------------------------------------------
+        State             Occupied              Virtual             Excitation
+        number             orbital              orbital             amplitude
+ -------------------------------------------------------------------------------
+             1   2.51217 eV
+                                 7                    8              -0.999223
+             2   2.51217 eV
+                                 6                    8               0.999223
+             3   5.17689 eV
+                                 5                    8              -0.998880
+             4   5.17689 eV
+                                 4                    8              -0.998880
+             5   6.72940 eV
+                                 3                    8              -0.997780
+             6   7.30716 eV
+                                 7                    9              -0.999306
+             7   7.30716 eV
+                                 6                    9              -0.999306
+             8   8.00066 eV
+                                 7                   10               0.999156
+             9   8.00066 eV
+                                 6                   10               0.999156
+            10   8.58153 eV
+                                 7                   12               0.694801
+                                 6                   11               0.694283
+                                 6                   12               0.127322
+                                 7                   11              -0.127312
+ -------------------------------------------------------------------------------
+ 
+ -------------------------------------------------------------------------------
+ -                            Natural Orbital analysis                         -
+ -------------------------------------------------------------------------------
+   STATE NR.      1             2.51217 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.99874   Sum Eigv: 0.99874
+   STATE NR.      2             2.51217 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.99874   Sum Eigv: 0.99874
+   STATE NR.      3             5.17689 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.99821   Sum Eigv: 0.99821
+   STATE NR.      4             5.17689 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.99821   Sum Eigv: 0.99821
+   STATE NR.      5             6.72940 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.99758   Sum Eigv: 0.99758
+   STATE NR.      6             7.30716 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.99913   Sum Eigv: 0.99913
+   STATE NR.      7             7.30716 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.99913   Sum Eigv: 0.99913
+   STATE NR.      8             8.00066 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.99903   Sum Eigv: 0.99903
+   STATE NR.      9             8.00066 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.99903   Sum Eigv: 0.99903
+   STATE NR.     10             8.58153 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.49924   Sum Eigv: 0.49924
+     Particle-Hole state: 2   Spin:1     Eigenvalue: 0.49851   Sum Eigv: 0.99775
+ -------------------------------------------------------------------------------
+ 
+                       triplet excitations finished                             
+                                                                                
+ -------------------------------------------------------------------------------
+ -                      TDDFPT SINGLET ENERGIES                                -
+ -------------------------------------------------------------------------------
+ 
+ -------------------------------------------------------------------------------
+ -                            TDDFPT Initial Guess                             -
+ -------------------------------------------------------------------------------
+          State         Occupied      ->      Virtual          Excitation
+          number         orbital              orbital          energy (eV)
+ -------------------------------------------------------------------------------
+             1                7                    8              2.97608
+             2                6                    8              2.97608
+             3                5                    8              5.64687
+             4                4                    8              5.64687
+             5                7                    9              7.43146
+             6                6                    9              7.43146
+             7                3                    8              7.74845
+             8                7                   10              8.07881
+             9                6                   10              8.07881
+            10                7                   11              8.75760
+
+      Number of active states:                                        371
+ -------------------------------------------------------------------------------
+ 
+ -------------------------------------------------------------------------------
+ -                      TDDFPT WAVEFUNCTION OPTIMIZATION                       -
+ -------------------------------------------------------------------------------
+
+          Step            Time         Convergence           Conv. states
+ -------------------------------------------------------------------------------
+
+    State    Exc. energy (eV)      Convergence (eV)
+        1       3.5760234             5.9994E-01
+        2       3.5760235             5.9994E-01
+        3       6.2063952             5.5953E-01
+        4       6.2063953             5.5953E-01
+        5       7.4344508             2.9949E-03
+        6       7.4344508             2.9949E-03
+        7       8.0795077             3.3106E-01
+        8       8.0795077             6.9580E-04
+        9       8.7434432             6.6463E-01
+       10      12.8457988             4.0882E+00
+ 
+             1           116.9          1.5024E-01                      0
+
+    State    Exc. energy (eV)      Convergence (eV)
+        1       3.4759841            -1.0004E-01
+        2       3.4759841            -1.0004E-01
+        3       6.1114590            -9.4936E-02
+        4       6.1114590            -9.4936E-02
+        5       7.4321182            -2.3327E-03
+        6       7.4321182            -2.3327E-03
+        7       8.0711283            -8.3795E-03
+        8       8.0711283            -8.3795E-03
+        9       8.7345526            -8.8905E-03
+       10       8.7904773            -4.0553E+00
+ 
+             2           121.5          1.4903E-01                      0
+
+    State    Exc. energy (eV)      Convergence (eV)
+        1       3.4727745            -3.2096E-03
+        2       3.4727745            -3.2096E-03
+        3       6.1091511            -2.3079E-03
+        4       6.1091512            -2.3079E-03
+        5       7.4321061            -1.2054E-05
+        6       7.4321061            -1.2054E-05
+        7       8.0707390            -3.8929E-04
+        8       8.0707390            -3.8929E-04
+        9       8.7256509            -8.9018E-03
+       10       8.7582148            -3.2262E-02
+ 
+             3           125.6          1.1856E-03                      0
+
+    State    Exc. energy (eV)      Convergence (eV)
+        1       3.4727735            -9.5741E-07
+        2       3.4727735            -9.5741E-07
+        3       6.1091509            -1.7864E-07
+        4       6.1091510            -1.7864E-07
+        5       7.4321061            -1.5712E-09
+        6       7.4321061            -1.5712E-09
+        7       8.0707386            -3.1357E-07
+        8       8.0707387            -3.1357E-07
+        9       8.7254041            -2.4675E-04
+       10       8.7274116            -3.0803E-02
+ 
+             4           129.4          1.1320E-03                      4
+
+    State    Exc. energy (eV)      Convergence (eV)
+        1       3.4727735            -1.9339E-10
+        2       3.4727735            -1.9339E-10
+        3       6.1091509            -3.7854E-12
+        4       6.1091510            -3.7801E-12
+        5       7.4321061            -8.6101E-14
+        6       7.4321061            -9.6674E-14
+        7       8.0707386            -9.0791E-11
+        8       8.0707387            -9.0788E-11
+        9       8.7252938            -1.1030E-04
+       10       8.7260376            -1.3740E-03
+ 
+             5           131.5          5.0495E-05                      8
+
+    State    Exc. energy (eV)      Convergence (eV)
+        1       3.4727735            -7.5527E-15
+        2       3.4727735            -6.0421E-15
+        3       6.1091509            -3.7763E-15
+        4       6.1091510            -1.2084E-14
+        5       7.4321061             4.5316E-15
+        6       7.4321061             0.0000E+00
+        7       8.0707386             4.5316E-15
+        8       8.0707387            -1.0574E-14
+        9       8.7252930            -7.7762E-07
+       10       8.7260347            -2.8875E-06
+ 
+             6            83.1          1.0612E-07                      8
+ ------------------------- Restart Davidson iterations -------------------------
+
+    State    Exc. energy (eV)      Convergence (eV)
+        1       3.4727735            -6.0421E-15
+        2       3.4727735            -3.0211E-15
+        3       6.1091509             7.5527E-16
+        4       6.1091510             0.0000E+00
+        5       7.4321061            -5.1358E-14
+        6       7.4321061            -1.8126E-14
+        7       8.0707386             7.4016E-14
+        8       8.0707387             8.9122E-14
+        9       8.7252930            -3.0211E-15
+       10       8.7260347            -7.5527E-15
+ 
+             7            84.8          3.2752E-15                     10
+ 
+ -------------------------------------------------------------------------------
+ -  TDDFPT run converged in 7 iteration(s) 
+ -------------------------------------------------------------------------------
+
+ R-TDDFPT states of multiplicity 1
+ Transition dipoles calculated using length formulation
+
+         State    Excitation        Transition dipole (a.u.)        Oscillator
+         number   energy (eV)       x           y           z     strength (a.u.)
+         ------------------------------------------------------------------------
+ TDDFPT|      1       3.47277  -2.8164E-07 -5.7799E-02 -2.8368E-02   3.52705E-04
+ TDDFPT|      2       3.47277   1.9727E-07 -2.8368E-02  5.7799E-02   3.52705E-04
+ TDDFPT|      3       6.10915   5.1646E-08 -2.8348E-09 -1.7670E-09   4.00895E-16
+ TDDFPT|      4       6.10915   2.2063E-09  1.4689E-09 -3.0639E-09   2.45658E-18
+ TDDFPT|      5       7.43211   2.5252E-10  1.9492E-08  9.3022E-09   8.49490E-17
+ TDDFPT|      6       7.43211   2.0967E-09 -9.5805E-09  1.9727E-08   8.83747E-17
+ TDDFPT|      7       8.07074   2.4447E-06  3.3786E-01  1.6261E-01   2.77992E-02
+ TDDFPT|      8       8.07074   1.8254E-06 -1.6261E-01  3.3786E-01   2.77992E-02
+ TDDFPT|      9       8.72529   3.0074E-05  5.0267E-07 -9.4910E-07   1.93590E-10
+ TDDFPT|     10       8.72603  -5.6971E-05 -9.4440E-07 -5.2374E-07   6.94138E-10
+
+ TDDFPT : CheckSum  =  0.814961E+00
+ 
+ -------------------------------------------------------------------------------
+ -                            Excitation analysis                              -
+ -------------------------------------------------------------------------------
+        State             Occupied              Virtual             Excitation
+        number             orbital              orbital             amplitude
+ -------------------------------------------------------------------------------
+             1   3.47277 eV
+                                 7                    8              -0.997910
+             2   3.47277 eV
+                                 6                    8               0.997910
+             3   6.10915 eV
+                                 5                    8               0.997511
+             4   6.10915 eV
+                                 4                    8               0.997511
+             5   7.43211 eV
+                                 7                    9               0.999912
+             6   7.43211 eV
+                                 6                    9               0.999912
+             7   8.07074 eV
+                                 7                   10               0.999403
+             8   8.07074 eV
+                                 6                   10               0.999403
+             9   8.72529 eV
+                                 6                   12              -0.623737
+                                 7                   11              -0.623731
+                                 6                   11              -0.333032
+                                 7                   12               0.333011
+            10   8.72603 eV
+                                 6                   11               0.623755
+                                 7                   12              -0.623716
+                                 7                   11              -0.333029
+                                 6                   12              -0.333016
+ -------------------------------------------------------------------------------
+ 
+ -------------------------------------------------------------------------------
+ -                            Natural Orbital analysis                         -
+ -------------------------------------------------------------------------------
+   STATE NR.      1             3.47277 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.99666   Sum Eigv: 0.99666
+   STATE NR.      2             3.47277 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.99666   Sum Eigv: 0.99666
+   STATE NR.      3             6.10915 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.99578   Sum Eigv: 0.99578
+   STATE NR.      4             6.10915 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.99578   Sum Eigv: 0.99578
+   STATE NR.      5             7.43211 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.99994   Sum Eigv: 0.99994
+   STATE NR.      6             7.43211 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.99994   Sum Eigv: 0.99994
+   STATE NR.      7             8.07074 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.99923   Sum Eigv: 0.99923
+   STATE NR.      8             8.07074 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.99923   Sum Eigv: 0.99923
+   STATE NR.      9             8.72529 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.49998   Sum Eigv: 0.49998
+     Particle-Hole state: 2   Spin:1     Eigenvalue: 0.49995   Sum Eigv: 0.99992
+   STATE NR.     10             8.72603 eV
+     Particle-Hole state: 1   Spin:1     Eigenvalue: 0.49999   Sum Eigv: 0.49999
+     Particle-Hole state: 2   Spin:1     Eigenvalue: 0.49993   Sum Eigv: 0.99992
+ -------------------------------------------------------------------------------
+ 
+ -------------------------------------------------------------------------------
+ -                         START SOC CALCULATIONS                              -
+ -------------------------------------------------------------------------------
+Starting from TDDFPT Excited States:
+      STATE          SINGLET/eV         TRIPLET/eV
+        1              3.47277         2.51217
+        2              3.47277         2.51217
+        3              6.10915         5.17689
+        4              6.10915         5.17689
+        5              7.43211         6.72940
+        6              7.43211         7.30716
+        7              8.07074         7.30716
+        8              8.07074         8.00066
+        9              8.72529         8.00066
+       10              8.72603         8.58153
+Starting restricted closed shell:
+Diagonlzing SOC-Matrix
+Ground state stabilisation:            2.4639204420
+------------------------------------------------------------------------------
+-                         SOC CORRECTED SPECTRUM                             -
+------------------------------------------------------------------------------
+-     STATE   SOC-corrected exc. energies [eV]  Oscillator strengths [a.u.]  -
+------------------------------------------------------------------------------
+          1                    2.46392         0.00000
+          2                    2.46468         0.00000
+          3                    2.51134         0.00000
+          4                    2.51134         0.00000
+          5                    2.56389         0.00000
+          6                    2.56389         0.00000
+          7                    3.47702         0.00035
+          8                    3.47702         0.00035
+          9                    5.14468         0.00000
+         10                    5.14680         0.00016
+         11                    5.17777         0.00000
+         12                    5.17777         0.00000
+         13                    5.21339         0.00000
+         14                    5.21339         0.00000
+         15                    6.11255         0.00000
+         16                    6.11255         0.00000
+         17                    6.73226         0.00000
+         18                    6.73235         0.00000
+         19                    6.73235         0.00000
+         20                    7.25963         0.00000
+         21                    7.25965         0.00000
+         22                    7.29198         0.00000
+         23                    7.29198         0.00000
+         24                    7.35898         0.00000
+         25                    7.35898         0.00000
+         26                    7.45158         0.00000
+         27                    7.45158         0.00000
+         28                    7.95311         0.00000
+         29                    7.95313         0.00000
+         30                    7.97712         0.00581
+         31                    7.97712         0.00581
+         32                    8.05247         0.00000
+         33                    8.05247         0.00000
+         34                    8.09855         0.02199
+         35                    8.09855         0.02199
+         36                    8.58374         0.00000
+         37                    8.58374         0.00000
+         38                    8.58374         0.00000
+         39                    8.72749         0.00000
+         40                    8.72824         0.00000
+TDDFT+SOC : CheckSum (eV)       251.62278259
+-----------------------------------------------------------------------------
+-                              Splittings                                   -
+-----------------------------------------------------------------------------
+-     STATE          exc.energies[eV]          splittings[eV]               -
+-----------------------------------------------------------------------------
+     T0     2            2.4639204420           -0.0482490029
+     T0     1            2.4646843231           -0.0474851069
+     T-1    1            2.5113408269           -0.0008286032
+     T-1    2            2.5113408799           -0.0008285650
+     T+1    1            2.5638930767            0.0517236467
+     T+1    2            2.5638931154            0.0517236706
+     S      2            3.4770209495            0.0042474354
+     S      3            3.4770210117            0.0042474812
+     T0     4            5.1446770942           -0.0322119515
+     T0     3            5.1468038531           -0.0300851704
+     T-1    3            5.1777703951            0.0008813716
+     T-1    4            5.1777704172            0.0008813715
+     T+1    3            5.2133858672            0.0364968437
+     T+1    4            5.2133858672            0.0364968215
+     S      4            6.1125542068            0.0034032571
+     S      5            6.1125542307            0.0034032570
+     T-1    5            6.7322580868            0.0028568589
+     T0     5            6.7323496111            0.0029483832
+     T+1    5            6.7323496111            0.0029483832
+     T0     7            7.2596322243           -0.0475290302
+     T0     6            7.2596479185           -0.0475133210
+     T-1    6            7.2919760855           -0.0151851541
+     T+1    7            7.2919760972           -0.0151851574
+     T-1    7            7.3589751899            0.0518139353
+     T+1    6            7.3589751899            0.0518139504
+     S      6            7.4515764414            0.0194703410
+     S      7            7.4515764533            0.0194703378
+     T0     9            7.9531119287           -0.0475478571
+     T0     8            7.9531250971           -0.0475346737
+     T-1    8            7.9771210607           -0.0235387101
+     T-1    9            7.9771210760           -0.0235387099
+     T+1    9            8.0524678124            0.0518080265
+     T+1    8            8.0524678148            0.0518080440
+     S      8            8.0985519961            0.0278133473
+     S      9            8.0985520119            0.0278133481
+     T+1   10            8.5837368130            0.0022050941
+     T-1   10            8.5837445381            0.0022128192
+     T0    10            8.5837445464            0.0022128274
+     S     10            8.7274933789            0.0022003510
+     S     11            8.7282350504            0.0022003858
+----------------------------------------------------------------------------
+SOC Calculation terminated
+Returning to TDDFPT for Force calculation and deallocations
+
+ ENERGY| Total FORCE_EVAL ( QS ) energy [a.u.]:              -29.931395317599048
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -                                DBCSR STATISTICS                             -
+ -                                                                             -
+ -------------------------------------------------------------------------------
+ COUNTER                                    TOTAL       BLAS       SMM       ACC
+ flops     7 x     7 x     7               119364       0.0%    100.0%      0.0%
+ flops    60 x     7 x     7               593880       0.0%    100.0%      0.0%
+ flops    30 x    21 x    30               604800       0.0%    100.0%      0.0%
+ flops    30 x    32 x    30               921600       0.0%    100.0%      0.0%
+ flops    60 x     7 x    30              2570400       0.0%    100.0%      0.0%
+ flops    30 x    30 x     7             11377800       0.0%    100.0%      0.0%
+ flops     7 x     7 x    30             12236280       0.0%    100.0%      0.0%
+ flops    30 x     7 x    30             41983200       0.0%    100.0%      0.0%
+ flops inhomo. stacks                           0       0.0%      0.0%      0.0%
+ flops total                        70.407324E+06       0.0%    100.0%      0.0%
+ flops max/rank                     40.377324E+06       0.0%    100.0%      0.0%
+ matmuls inhomo. stacks                         0       0.0%      0.0%      0.0%
+ matmuls total                               8806       0.0%    100.0%      0.0%
+ number of processed stacks                  6823       0.0%    100.0%      0.0%
+ average stack size                                     0.0       1.3       0.0
+ marketing flops                    74.205808E+06
+ -------------------------------------------------------------------------------
+ # multiplications                           1386
+ max memory usage/rank             543.232000E+06
+ # max total images/rank                        2
+ # max 3D layers                                1
+ # MPI messages exchanged                 5144832
+ MPI messages size (bytes):
+  total size                       377.249504E+06
+  min size                           0.000000E+00
+  max size                          14.400000E+03
+  average size                      73.325912E+00
+ MPI breakdown and total messages size (bytes):
+             size <=      128             5085161                        0
+       128 < size <=     8192               38431                 71393560
+      8192 < size <=    32768               21240                305856000
+     32768 < size <=   131072                   0                        0
+    131072 < size <=  4194304                   0                        0
+   4194304 < size <= 16777216                   0                        0
+  16777216 < size                               0                        0
+ -------------------------------------------------------------------------------
+
+ *** WARNING in dbcsr_mm.F:291 :: Using a non-square number of MPI ranks ***
+ *** might lead to poor performance. Used ranks: 128 Suggested: 121 256  ***
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -                      DBCSR MESSAGE PASSING PERFORMANCE                      -
+ -                                                                             -
+ -------------------------------------------------------------------------------
+ ROUTINE             CALLS      AVE VOLUME [Bytes]
+ MP_Bcast                9                     12.
+ MP_Allreduce         5891                      8.
+ MP_Alltoall         18378                  36107.
+ MP_ISend            86614                    424.
+ MP_IRecv            85890                    299.
+ -------------------------------------------------------------------------------
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -                                DBM STATISTICS                               -
+ -                                                                             -
+ -------------------------------------------------------------------------------
+    M  x    N  x    K                                          COUNT     PERCENT
+ -------------------------------------------------------------------------------
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -                                GRID STATISTICS                              -
+ -                                                                             -
+ -------------------------------------------------------------------------------
+ LP    KERNEL             BACKEND                              COUNT     PERCENT
+ 2     collocate ortho    CPU                                  25917      26.54%
+ 2     integrate ortho    CPU                                  25440      26.05%
+ 3     collocate ortho    CPU                                  13692      14.02%
+ 3     integrate ortho    CPU                                  13440      13.76%
+ 1     collocate ortho    CPU                                   6846       7.01%
+ 1     integrate ortho    CPU                                   6720       6.88%
+ 4     collocate ortho    CPU                                   1956       2.00%
+ 4     integrate ortho    CPU                                   1920       1.97%
+ 0     collocate general  CPU                                    512       0.52%
+ 0     collocate ortho    CPU                                    489       0.50%
+ 0     integrate ortho    CPU                                    480       0.49%
+ 0     integrate general  CPU                                    256       0.26%
+ -------------------------------------------------------------------------------
+
+ MEMORY| Estimated peak process memory [MiB]                                 519
+
+ -------------------------------------------------------------------------------
+ ----                             MULTIGRID INFO                            ----
+ -------------------------------------------------------------------------------
+ count for grid        1:         368676          cutoff [a.u.]          600.00
+ count for grid        2:         647764          cutoff [a.u.]          200.00
+ count for grid        3:         592736          cutoff [a.u.]           66.67
+ count for grid        4:         221497          cutoff [a.u.]           22.22
+ count for grid        5:          70427          cutoff [a.u.]            7.41
+ total gridlevel count  :        1901100
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -                         MESSAGE PASSING PERFORMANCE                         -
+ -                                                                             -
+ -------------------------------------------------------------------------------
+
+ ROUTINE             CALLS      AVE VOLUME [Bytes]
+ MP_Group                6
+ MP_Bcast              375                 467268.
+ MP_Allreduce         6116                    254.
+ MP_Sync               729
+ MP_Alltoall          4522                 966100.
+ MP_SendRecv         82804                  23360.
+ MP_ISendRecv        81280                  23360.
+ MP_Wait            134390
+ MP_comm_split          78
+ MP_ISend            53881                  98250.
+ MP_IRecv            56482                  93698.
+ -------------------------------------------------------------------------------
+
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -                           R E F E R E N C E S                               -
+ -                                                                             -
+ -------------------------------------------------------------------------------
+ 
+ CP2K version 2024.1 (Development Version), the CP2K developers group (2024).
+ CP2K is freely available from https://www.cp2k.org/ .
+
+ Kuehne,Thomas D.; Iannuzzi,Marcella; Del Ben,Mauro;
+ Rybkin,Vladimir V.; Seewald,Patrick; Stein,Frederick; Laino,Teodoro;
+ Khaliullin,Rustam Z.; Schuett,Ole; Schiffmann,Florian; Golze,Dorothea;
+ Wilhelm,Jan; Chulkov,Sergey; Bani-Hashemian,Mohammad Hossein;
+ Weber,Valery; Borstnik,Urban; Taillefumier,Mathieu;
+ Jakobovits,Alice Shoshana; Lazzaro,Alfio; Pabst,Hans; Mueller,Tiziano;
+ Schade,Robert; Guidon,Manuel; Andermatt,Samuel; Holmberg,Nico;
+ Schenter,Gregory K.; Hehn,Anna; Bussy,Augustin; Belleflamme,Fabian;
+ Tabacchi,Gloria; Gloess,Andreas; Lass,Michael; Bethune,Iain;
+ Mundy,Christopher J.; Plessl,Christian; Watkins,Matt;
+ VandeVondele,Joost; Krack,Matthias; Hutter,Juerg. 
+ The Journal of Chemical Physics, 152 (19), (2020). 
+ CP2K: An electronic structure and molecular dynamics software package -
+ Quickstep: Efficient and accurate electronic structure calculations.
+ https://doi.org/10.1063/5.0007045
+
+ Schuett, Ole; Messmer, Peter; Hutter, Juerg; VandeVondele, Joost. 
+ Electronic Structure Calculations on Graphics Processing Units, John
+ Wiley & Sons, Ltd, 173-190 (2016). 
+ GPU-Accelerated Sparse Matrix-Matrix Multiplication for
+ Linear Scaling Density Functional Theory.
+ https://doi.org/10.1002/9781118670712.ch8
+
+ Heinecke, A; Henry, G; Hutchinson, M; Pabst, H. 
+ Proceedings of Intl. Supercomputing Conference, 981-991 (2016). 
+ LIBXSMM: Accelerating Small Matrix Multiplications
+ by Runtime Code Generation.
+ https://doi.org/10.1109/SC.2016.83
+
+ Borstnik, U; VandeVondele, J; Weber, V; Hutter, J. 
+ PARALLEL COMPUTING, 40 (5-6), 47-58 (2014). 
+ Sparse matrix multiplication: The distributed block-compressed sparse
+ row library.
+ https://doi.org/10.1016/j.parco.2014.03.012
+
+ Hutter, J; Iannuzzi, M; Schiffmann, F; VandeVondele, J. 
+ WIREs Comput Mol Sci., 4 (1), 15-25 (2014). 
+ CP2K: atomistic simulations of condensed matter systems.
+ https://doi.org/10.1002/wcms.1159
+
+ Krack, M. 
+ THEORETICAL CHEMISTRY ACCOUNTS, 114 (1-3), 145-152 (2005). 
+ Pseudopotentials for H to Kr optimized for gradient-corrected
+ exchange-correlation functionals.
+ https://doi.org/10.1007/s00214-005-0655-y
+
+ VandeVondele, J; Krack, M; Mohamed, F; Parrinello, M; Chassaing, T;
+ Hutter, J. COMPUTER PHYSICS COMMUNICATIONS, 167 (2), 103-128 (2005). 
+ QUICKSTEP: Fast and accurate density functional calculations using a
+ mixed Gaussian and plane waves approach.
+ https://doi.org/10.1016/j.cpc.2004.12.014
+
+ Frigo, M; Johnson, SG. 
+ PROCEEDINGS OF THE IEEE, 93 (2), 216-231 (2005). 
+ The design and implementation of FFTW3.
+ https://doi.org/10.1109/JPROC.2004.840301
+
+ Iannuzzi, M; Chassaing, T; Wallman, T; Hutter, J. 
+ CHIMIA, 59 (7-8), 499-503 (2005). 
+ Ground and excited state density functional calculations with the
+ Gaussian and augmented-plane-wave method.
+ https://doi.org/10.2533/000942905777676164
+
+ VandeVondele, J; Hutter, J. 
+ JOURNAL OF CHEMICAL PHYSICS, 118 (10), 4365-4369 (2003). 
+ An efficient orbital transformation method for electronic structure
+ calculations.
+ https://doi.org/10.1063/1.1543154
+
+ Martin,Richard L.. 
+ The Journal of Chemical Physics, 118 (11), 4775-4777 (2003). 
+ Natural transition orbitals.
+ https://doi.org/10.1063/1.1558471
+
+ Martyna, GJ; Tuckerman, ME. 
+ JOURNAL OF CHEMICAL PHYSICS, 110 (6), 2810-2821 (1999). 
+ A reciprocal space based method for treating long range interactions in
+ ab initio and force-field-based calculations in clusters.
+ https://doi.org/10.1063/1.477923
+
+ Hartwigsen, C; Goedecker, S; Hutter, J. 
+ PHYSICAL REVIEW B, 58 (7), 3641-3662 (1998). 
+ Relativistic separable dual-space Gaussian pseudopotentials from H to Rn.
+ https://doi.org/10.1103/PhysRevB.58.3641
+
+ Lippert, G; Hutter, J; Parrinello, M. 
+ MOLECULAR PHYSICS, 92 (3), 477-487 (1997). 
+ A hybrid Gaussian and plane wave density functional scheme.
+ https://doi.org/10.1080/002689797170220
+
+ Perdew, JP; Burke, K; Ernzerhof, M. 
+ PHYSICAL REVIEW LETTERS, 77 (18), 3865-3868 (1996). 
+ Generalized gradient approximation made simple.
+ https://doi.org/10.1103/PhysRevLett.77.3865
+
+ Goedecker, S; Teter, M; Hutter, J. 
+ PHYSICAL REVIEW B, 54 (3), 1703-1710 (1996). 
+ Separable dual-space Gaussian pseudopotentials.
+ https://doi.org/10.1103/PhysRevB.54.1703
+
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -                                T I M I N G                                  -
+ -                                                                             -
+ -------------------------------------------------------------------------------
+ SUBROUTINE                       CALLS  ASD         SELF TIME        TOTAL TIME
+                                MAXIMUM       AVERAGE  MAXIMUM  AVERAGE  MAXIMUM
+ CP2K                                 1  1.0    0.250    0.283 2351.858 2351.863
+ qs_energies                          1  2.0    0.001    0.011 2350.742 2350.764
+ qs_energies_properties               1  3.0    0.000    0.000 1833.570 1833.592
+ tddfpt                               1  4.0    0.000    0.008 1833.570 1833.592
+ tddfpt_soc_energies                  1  5.0    0.000    0.000 1825.887 1825.911
+ tddfpt_energies                      2  6.0    0.001    0.013 1771.542 1771.550
+ tddfpt_davidson_solver               4  7.0    0.009    0.099 1665.256 1665.279
+ tddfpt_compute_Aop_evects           14  8.0    0.000    0.002 1193.121 1193.236
+ fhxc_kernel                         14  9.0    0.005    0.020  991.050  991.130
+ dbcsr_multiply_generic            1386 10.8    0.124    0.232  953.478  969.819
+ cp_dbcsr_sm_fm_multiply            603  9.3    0.010    0.031  785.719  789.985
+ multiply_cannon                   1386 11.8    3.896    4.279  544.746  569.838
+ multiply_cannon_loop              1386 12.8    0.844    1.148  486.530  510.685
+ scf_env_do_scf                       1  3.0    0.000    0.000  506.890  506.922
+ scf_env_do_scf_inner_loop           20  4.0    0.003    0.014  489.400  489.421
+ multiply_cannon_multrec          22176 13.8  377.528  425.266  377.535  425.271
+ pw_transfer                       3392 12.3    0.161    0.203  414.484  416.273
+ fft_wrap_pw1pw2                   3212 13.3    0.014    0.025  414.235  416.034
+ fft3d_ps                          3212 15.3    8.168    9.183  411.482  413.484
+ qs_scf_new_mos                      20  5.0    0.000    0.013  399.083  400.059
+ qs_scf_loop_do_ot                   20  6.0    0.000    0.000  399.083  400.059
+ ot_scf_mini                         20  7.0    0.000    0.000  381.945  382.844
+ dbcsr_complete_redistribute       1729 11.4    0.070    0.138  367.390  371.822
+ cp_dbcsr_sm_fm_multiply_core       603 10.3    0.001    0.012  348.304  360.479
+ tddfpt_orthonormalize_psi1_psi      16  7.9    0.012    0.070  358.196  360.013
+ copy_dbcsr_to_fm                   670 10.2    0.008    0.033  313.101  320.933
+ cp_dbcsr_plus_fm_fm_t_native       141 10.0    0.002    0.015  274.078  276.488
+ mp_sum_l                          6009 11.1  249.466  257.749  249.466  257.749
+ mp_alltoall_z22v                  3212 17.3  251.088  257.006  251.088  257.006
+ ot_mini                             20  8.0    0.002    0.036  254.382  254.947
+ qs_rho_update_rho_low              163  9.3    0.003    0.018  236.587  239.035
+ calculate_rho_elec                 163 10.3    0.049    0.082  236.584  239.034
+ fft_wrap_pw1pw2_600               1919 14.5    0.171    0.214  226.527  229.386
+ copy_fm_to_dbcsr                  1059 10.6    0.004    0.014  214.234  218.404
+ mp_waitall_1                    240092 14.6  156.390  216.844  156.390  216.844
+ qs_ot_get_derivative                20  9.0    0.000    0.013  211.270  212.131
+ integrate_v_rspace                 160  9.9    0.003    0.005  207.883  210.830
+ tddfpt_apply_energy_diff            14  9.0    0.001    0.001  202.070  202.164
+ potential_pw2rs                    160 10.9    0.008    0.027  199.962  200.279
+ density_rs2pw                      163 11.3    0.008    0.019  198.602  199.594
+ mp_alltoall_i22                   2422 12.4  185.898  196.624  185.898  196.624
+ mp_alltoall_d11v                  7589 12.6  169.678  188.766  169.678  188.766
+ dbcsr_desymmetrize_deep            674 11.2    0.013    0.085  159.960  167.267
+ mp_sum_dv                         4272 10.3  156.863  160.383  156.863  160.383
+ qs_ot_get_derivative_diag           19 10.0    0.000    0.000  158.230  159.139
+ cp_fm_trace_a1b1t1_aa             3880  9.0    8.613   11.783  156.952  158.523
+ tddfpt_apply_xc_analytic           140 10.0    0.086    0.129  147.173  147.734
+ multiply_cannon_metrocomm3       22176 13.8    0.056    0.093   88.028  143.815
+ xc_pw_derive                      1179 11.7    0.006    0.017  141.376  142.797
+ tddfpt_compute_residual_vects       10  8.0    0.000    0.001  130.679  131.084
+ x_to_yz                           1112 16.0    3.395    3.918  128.019  129.920
+ make_m2s                          2772 11.8    0.032    0.042  113.512  120.982
+ make_images                       2772 12.8    7.972    8.644  112.837  118.395
+ mp_alltoall_z11v                   969 17.1  105.484  107.313  105.484  107.313
+ make_images_sizes                 2772 13.8    0.003    0.014  103.967  106.534
+ mp_alltoall_i44                   2772 14.8  103.963  106.532  103.963  106.532
+ mp_alltoall_i11v                  5918 12.4   93.233   95.830   93.233   95.830
+ yz_to_x                            808 17.1    0.233    0.348   90.175   91.795
+ qs_ot_get_p                         21  7.9    0.000    0.000   86.780   87.386
+ transfer_pw2rs                     801 11.9    0.005    0.016   83.069   83.639
+ xc_pw_divergence                   160 11.8    0.002    0.005   78.901   80.146
+ yz_to_xz                           640 15.9    1.640    1.890   75.219   77.122
+ transfer_rs2pw                     817 12.3    0.007    0.017   73.278   74.212
+ xz_to_yz                           652 16.3    1.703    2.029   70.953   73.270
+ xc_calc_2nd_deriv_analytical       140 11.0    3.246    4.622   72.852   73.152
+ mp_cart_sub                       1350 12.2   69.532   72.845   69.532   72.845
+ tddfpt_print_nto_analysis            2  7.0    0.002    0.012   69.832   70.103
+ qs_ks_update_qs_env                 21  5.0    0.000    0.010   63.048   63.659
+ rebuild_ks_matrix                   20  6.0    0.001    0.011   61.425   62.054
+ qs_ks_build_kohn_sham_matrix        20  7.0    0.004    0.013   61.424   62.054
+ mp_waitany                       46944 14.1   59.411   61.393   59.411   61.393
+ mp_allgather_i34                  1386 12.8   53.135   54.740   53.135   54.740
+ tddfpt_soc                           1  6.0    0.000    0.000   53.102   53.124
+ tddfpt_soc_rcs                       1  7.0    0.010    0.025   53.102   53.124
+ fft_wrap_pw1pw2_10                 323 14.1    0.002    0.013   49.804   51.420
+ qs_ot_p2m_diag                      20  9.0    0.003    0.023   50.089   51.066
+ fft_wrap_pw1pw2_70                 323 14.1    0.004    0.014   46.796   47.455
+ mp_cart_create                     679 12.2   43.804   47.426   43.804   47.427
+ -------------------------------------------------------------------------------
+
+ The number of warnings for this run is : 1
+ 
+ -------------------------------------------------------------------------------
+  **** **** ******  **  PROGRAM ENDED AT                 2024-01-15 15:08:25.824
+ ***** ** ***  *** **   PROGRAM RAN ON                               nesh-clk555
+ **    ****   ******    PROGRAM RAN BY                                  suphc355
+ ***** **    ** ** **   PROGRAM PROCESS ID                                716727
+  **** **  *******  **  PROGRAM STOPPED IN /gxfs_work/cau/suphc355/homologes/X2/
+                                           PP/Cl
